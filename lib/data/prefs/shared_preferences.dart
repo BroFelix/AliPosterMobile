@@ -1,8 +1,16 @@
+import 'dart:convert';
+
+import 'package:ali_poster/data/model/worker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void save(String code) async {
+void saveUser(Map user) async {
   var prefs = await SharedPreferences.getInstance();
-  prefs.setString("user", code);
+  prefs.setString("user", json.encode(user));
+}
+
+Future<Worker> getUser() async {
+  var prefs = await SharedPreferences.getInstance();
+  return Worker.fromJson(json.decode(prefs.getString("user")!));
 }
 
 void logOut() async {
@@ -17,4 +25,14 @@ Future<bool> isLoggedIn() async {
   } else {
     return false;
   }
+}
+
+Future<String?> getFCMToken() async {
+  var prefs = await SharedPreferences.getInstance();
+  return prefs.getString("fcmtoken");
+}
+
+Future<void> setFCMToken(String token) async {
+  var prefs = await SharedPreferences.getInstance();
+  prefs.setString("fcmtoken", token);
 }

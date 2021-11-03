@@ -1,4 +1,4 @@
-package com.example.ali_poster
+package uz.ds.ali_poster
 
 import io.flutter.embedding.android.FlutterActivity
 

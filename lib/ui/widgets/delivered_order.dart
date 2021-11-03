@@ -1,32 +1,32 @@
-import 'package:ali_poster/theme/color.dart';
 import 'package:ali_poster/theme/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OrderCard extends StatelessWidget {
-  OrderCard({
+class DeliveredOrder extends StatelessWidget {
+  DeliveredOrder({
     Key? key,
     this.orderId,
     this.cost,
     this.destination,
     this.orderedTime,
     this.clientContact,
-    required this.onPressed,
+    required this.taken,
   }) : super(key: key);
 
+  bool taken;
   final String? orderId;
   final int? cost;
   final String? destination;
   final String? orderedTime;
   final String? clientContact;
-  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 1.0,
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -35,11 +35,8 @@ class OrderCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                      'Заказ №$orderId',
-                      style: AppTextStyle.orderTextStyle,
-                    ),
-                    const SizedBox(width: 24.0),
+                    Text('Заказ №$orderId'),
+                    const SizedBox(width: 24),
                     Text(
                       '$cost Сум',
                       style: AppTextStyle.orderTextStyle,
@@ -55,24 +52,10 @@ class OrderCard extends StatelessWidget {
                   style: AppTextStyle.orderTextStyle,
                 ),
                 Text(
-                  'Контакты клиена ${clientContact ?? ""}',
+                  'Контакты клиента: ${clientContact ?? ""}',
                   style: AppTextStyle.orderTextStyle,
                 ),
               ],
-            ),
-            Material(
-              shape: const CircleBorder(),
-              color: AppColors.green,
-              child: IconButton(
-                iconSize: 32.0,
-                splashRadius: 25.0,
-                color: AppColors.red,
-                onPressed: onPressed,
-                icon: const Icon(
-                  Icons.add,
-                  color: AppColors.white,
-                ),
-              ),
             ),
           ],
         ),

@@ -3,23 +3,28 @@ import 'package:ali_poster/theme/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OrderCard extends StatelessWidget {
-  OrderCard({
+@immutable
+class TakenOrder extends StatelessWidget {
+  const TakenOrder({
     Key? key,
     this.orderId,
     this.cost,
     this.destination,
     this.orderedTime,
     this.clientContact,
-    required this.onPressed,
+    required this.isOrderSent,
+    required this.onDelivered,
+    required this.onCancel,
   }) : super(key: key);
 
+  final bool isOrderSent;
   final String? orderId;
   final int? cost;
   final String? destination;
   final String? orderedTime;
   final String? clientContact;
-  final VoidCallback onPressed;
+  final VoidCallback onDelivered;
+  final VoidCallback onCancel;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,7 @@ class OrderCard extends StatelessWidget {
                       'Заказ №$orderId',
                       style: AppTextStyle.orderTextStyle,
                     ),
-                    const SizedBox(width: 24.0),
+                    const SizedBox(width: 24),
                     Text(
                       '$cost Сум',
                       style: AppTextStyle.orderTextStyle,
@@ -60,20 +65,36 @@ class OrderCard extends StatelessWidget {
                 ),
               ],
             ),
-            Material(
-              shape: const CircleBorder(),
-              color: AppColors.green,
-              child: IconButton(
-                iconSize: 32.0,
-                splashRadius: 25.0,
+            if (isOrderSent) ...[
+              Material(
+                shape: const CircleBorder(),
+                // color: Colors.green,
                 color: AppColors.red,
-                onPressed: onPressed,
-                icon: const Icon(
-                  Icons.add,
-                  color: AppColors.white,
+                child: IconButton(
+                  iconSize: 32.0,
+                  splashRadius: 25.0,
+                  onPressed: onDelivered,
+                  icon: const Icon(
+                    Icons.done,
+                    color: AppColors.white,
+                  ),
                 ),
-              ),
-            ),
+              )
+            ] else ...[
+              Material(
+                shape: const CircleBorder(),
+                color: AppColors.purple,
+                child: IconButton(
+                  iconSize: 32.0,
+                  splashRadius: 25.0,
+                  onPressed: onCancel,
+                  icon: const Icon(
+                    Icons.remove,
+                    color: AppColors.white,
+                  ),
+                ),
+              )
+            ]
           ],
         ),
       ),
